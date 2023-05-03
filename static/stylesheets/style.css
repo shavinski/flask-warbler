@@ -158,6 +158,11 @@ nav + .container {
   margin-top: 100px;
 }
 
+#user-header-image {
+  width: inherit;
+  height: inherit;
+}
+
 #profile-image,
 #profile-avatar {
   border-radius: 100%;
