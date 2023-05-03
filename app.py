@@ -142,6 +142,8 @@ def list_users():
     else:
         users = User.query.filter(User.username.like(f"%{search}%")).all()
 
+    breakpoint()
+
     return render_template('users/index.html', users=users)
 
 
