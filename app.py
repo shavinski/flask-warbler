@@ -5,8 +5,8 @@ from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm, CsrfForm
-from models import db, connect_db, User, Message
+from forms import UserAddForm, LoginForm, MessageForm, CsrfForm, UpdateUserForm
+from models import db, connect_db, User, Message, bcrypt
 
 load_dotenv()
 
@@ -250,7 +250,53 @@ def stop_following(follow_id):
 def profile():
     """Update profile for current user."""
 
-    #TODO: IMPLEMENT THIS
+
+    # make sure user is logged in
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    
+    form = UpdateUserForm(obj=g.user)
+
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        image_url = form.image_url.data
+        header_image_url = form.header_image_url.data
+        bio = form.bio.data
+        password = form.password.data
+        is_auth = bcrypt.check_password_hash(g.user.password, password)
+        
+        if is_auth:
+            g.user.username = username
+            g.user.email = email
+            g.user.image_url = image_url
+            g.user.header_image_url = header_image_url
+            g.user.bio = bio
+            db.session.commit()
+            return redirect(f'/users/{g.user.id}')
+        
+        else:
+            flash('Invalid Password', 'danger')
+            return render_template("/users/edit.html", form=form, user_id=g.user.id)
+    
+    return render_template("/users/edit.html", form=form, user_id=g.user.id)
+
+
+
+
+
+
+
+
+
+
+
+    #TODO: Make a new edit form for user
+    # show the form then validate
+    # check password is valid password, if not flash error then reload form, keep all fields filled in with previous info
+    # should edit everything but password 
+    # if successful then redirect to user page 
 
 
 @app.post('/users/delete')
