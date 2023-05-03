@@ -22,10 +22,10 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
-#TODO: check templates for CSRF hidden forms
-#TODO: check authorization
 
-#FIXME: CSRF on all post requests
+#TODO: extract danger message to constant? or make flash a separate function?
+
+ACCESS_UNAUTHORIZED_MSG = "Access unauthorized."
 
 
 ##############################################################################
@@ -42,12 +42,12 @@ def add_user_to_g():
     else:
         g.user = None
 
+
 @app.before_request
 def add_csrf_form_to_g():
     """Will add csrf form to flask global"""
 
     g.csrf_form = CsrfForm()
-
 
 
 def do_login(user):
@@ -131,8 +131,6 @@ def logout():
 
     form = g.csrf_form
 
-    # IMPLEMENT THIS AND FIX BUG
-    # DO NOT CHANGE METHOD ON ROUTE
     if form.validate_on_submit():
         do_logout()
         flash('Successfully Logged Out', "success")
@@ -153,7 +151,7 @@ def list_users():
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     search = request.args.get('q')
@@ -171,7 +169,7 @@ def show_user(user_id):
     """Show user profile."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
@@ -184,7 +182,7 @@ def show_following(user_id):
     """Show list of people this user is following."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
@@ -196,7 +194,7 @@ def show_followers(user_id):
     """Show list of followers of this user."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
@@ -211,10 +209,9 @@ def start_following(follow_id):
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
-    #TODO: is this the right way for CSRF protection?
     form = g.csrf_form
 
     if form.validate_on_submit():
@@ -233,7 +230,7 @@ def stop_following(follow_id):
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
 
@@ -250,10 +247,9 @@ def stop_following(follow_id):
 def profile():
     """Update profile for current user."""
 
-
     # make sure user is logged in
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     form = UpdateUserForm(obj=g.user)
@@ -282,23 +278,6 @@ def profile():
 
     return render_template("/users/edit.html", form=form, user_id=g.user.id)
 
-
-
-
-
-
-
-
-
-
-
-    #TODO: Make a new edit form for user
-    # show the form then validate
-    # check password is valid password, if not flash error then reload form, keep all fields filled in with previous info
-    # should edit everything but password
-    # if successful then redirect to user page
-
-
 @app.post('/users/delete')
 def delete_user():
     """Delete user.
@@ -306,20 +285,19 @@ def delete_user():
     Redirect to signup page.
     """
 
-    if not g.user:
-        flash("Access unauthorized.", "danger")
+    form = g.csrf_form
+
+    if (not g.user) or (not form.validate_on_submit()):
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
-    form = g.csrf_form
-    if form.validate_on_submit():
-        do_logout()
+    do_logout()
+    Message.query.filter(Message.user_id == g.user.id).delete()
 
-        db.session.delete(g.user)
-        db.session.commit()
+    db.session.delete(g.user)
+    db.session.commit()
 
-        return redirect("/signup")
-
-    return redirect("/")
+    return redirect("/signup")
 
 ##############################################################################
 # Messages routes:
@@ -332,7 +310,7 @@ def add_message():
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     form = MessageForm()
@@ -352,7 +330,7 @@ def show_message(message_id):
     """Show a message."""
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     msg = Message.query.get_or_404(message_id)
@@ -368,7 +346,7 @@ def delete_message(message_id):
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
     form = g.csrf_form
@@ -377,7 +355,7 @@ def delete_message(message_id):
         msg = Message.query.get_or_404(message_id)
 
         if msg.user.id != g.user.id:
-            flash("Access unauthorized.", "danger")
+            flash(ACCESS_UNAUTHORIZED_MSG, "danger")
             return redirect(f"/users/{g.user.id}")
 
         db.session.delete(msg)
