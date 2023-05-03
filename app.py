@@ -255,7 +255,7 @@ def profile():
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
-    
+
     form = UpdateUserForm(obj=g.user)
 
     if form.validate_on_submit():
@@ -266,7 +266,7 @@ def profile():
         bio = form.bio.data
         password = form.password.data
         is_auth = bcrypt.check_password_hash(g.user.password, password)
-        
+
         if is_auth:
             g.user.username = username
             g.user.email = email
@@ -275,11 +275,11 @@ def profile():
             g.user.bio = bio
             db.session.commit()
             return redirect(f'/users/{g.user.id}')
-        
+
         else:
             flash('Invalid Password', 'danger')
             return render_template("/users/edit.html", form=form, user_id=g.user.id)
-    
+
     return render_template("/users/edit.html", form=form, user_id=g.user.id)
 
 
@@ -295,8 +295,8 @@ def profile():
     #TODO: Make a new edit form for user
     # show the form then validate
     # check password is valid password, if not flash error then reload form, keep all fields filled in with previous info
-    # should edit everything but password 
-    # if successful then redirect to user page 
+    # should edit everything but password
+    # if successful then redirect to user page
 
 
 @app.post('/users/delete')
@@ -399,11 +399,13 @@ def homepage():
     """
 
     if g.user:
-        messages = (Message
-                    .query
-                    .order_by(Message.timestamp.desc())
-                    .limit(100)
-                    .all())
+        user_ids = [user.id for user in g.user.following]
+        user_ids.append(g.user.id)
+
+        messages = (Message.query
+            .filter(Message.user_id.in_(user_ids))
+            .order_by(Message.timestamp.desc())
+            .limit(100).all())
 
         return render_template('home.html', messages=messages)
 
