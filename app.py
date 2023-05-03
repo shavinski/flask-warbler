@@ -22,6 +22,11 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
+#TODO: check templates for CSRF hidden forms
+#TODO: check authorization
+
+#FIXME: CSRF on all post requests
+
 
 ##############################################################################
 # User signup/login/logout
@@ -131,8 +136,8 @@ def logout():
     if form.validate_on_submit():
         do_logout()
         flash('Successfully Logged Out', "success")
-        
-        
+
+
     return redirect('/login')
 
 
@@ -157,8 +162,6 @@ def list_users():
         users = User.query.all()
     else:
         users = User.query.filter(User.username.like(f"%{search}%")).all()
-
-    breakpoint()
 
     return render_template('users/index.html', users=users)
 
@@ -211,9 +214,13 @@ def start_following(follow_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    followed_user = User.query.get_or_404(follow_id)
-    g.user.following.append(followed_user)
-    db.session.commit()
+    #TODO: is this the right way for CSRF protection?
+    form = g.csrf_form
+
+    if form.validate_on_submit():
+        followed_user = User.query.get_or_404(follow_id)
+        g.user.following.append(followed_user)
+        db.session.commit()
 
     return redirect(f"/users/{g.user.id}/following")
 
@@ -229,9 +236,12 @@ def stop_following(follow_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    followed_user = User.query.get_or_404(follow_id)
-    g.user.following.remove(followed_user)
-    db.session.commit()
+
+    form = g.csrf_form
+    if form.validate_on_submit():
+        followed_user = User.query.get_or_404(follow_id)
+        g.user.following.remove(followed_user)
+        db.session.commit()
 
     return redirect(f"/users/{g.user.id}/following")
 
@@ -240,7 +250,7 @@ def stop_following(follow_id):
 def profile():
     """Update profile for current user."""
 
-    # IMPLEMENT THIS
+    #TODO: IMPLEMENT THIS
 
 
 @app.post('/users/delete')
@@ -254,13 +264,16 @@ def delete_user():
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    do_logout()
+    form = g.csrf_form
+    if form.validate_on_submit():
+        do_logout()
 
-    db.session.delete(g.user)
-    db.session.commit()
+        db.session.delete(g.user)
+        db.session.commit()
 
-    return redirect("/signup")
+        return redirect("/signup")
 
+    return redirect("/")
 
 ##############################################################################
 # Messages routes:
@@ -312,9 +325,17 @@ def delete_message(message_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    msg = Message.query.get_or_404(message_id)
-    db.session.delete(msg)
-    db.session.commit()
+    form = g.csrf_form
+    if form.validate_on_submit():
+
+        msg = Message.query.get_or_404(message_id)
+
+        if msg.user.id != g.user.id:
+            flash("Access unauthorized.", "danger")
+            return redirect(f"/users/{g.user.id}")
+
+        db.session.delete(msg)
+        db.session.commit()
 
     return redirect(f"/users/{g.user.id}")
 
