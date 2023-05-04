@@ -176,6 +176,16 @@ def show_user(user_id):
 
     return render_template('users/show.html', user=user)
 
+@app.get('/users/<int:user_id>/likes')
+def show_user_liked_messages(user_id):
+
+    if not g.user:
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
+        return redirect("/")
+
+    return render_template('home.html', messages=g.user.liked_messages, from_end_point=f'/users/{g.user.id}/likes')
+
+
 
 @app.get('/users/<int:user_id>/following')
 def show_following(user_id):
@@ -299,6 +309,8 @@ def delete_user():
 
     return redirect("/signup")
 
+
+
 ##############################################################################
 # Messages routes:
 
@@ -386,6 +398,7 @@ def toggle_liked_message(msg_id):
     return redirect(request.form['from-page'])
 
 
+
 ##############################################################################
 # Homepage and error pages
 
@@ -404,7 +417,6 @@ def homepage():
         user_ids = [user.id for user in g.user.following]
         user_ids.append(g.user.id)
 
-        #TODO: FIX STAR CHANGE COLOR CHECK IF IN LIKED MESSAGES
         messages = (Message.query
             .filter(Message.user_id.in_(user_ids))
             .order_by(Message.timestamp.desc())
@@ -412,7 +424,7 @@ def homepage():
 
         liked_messages = g.user.liked_messages
 
-        return render_template('home.html', messages=messages, liked_messages=liked_messages)
+        return render_template('home.html', messages=messages, liked_messages=liked_messages, from_end_point='/')
 
     else:
         return render_template('home-anon.html')

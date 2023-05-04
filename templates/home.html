@@ -57,15 +57,17 @@
             <p>{{ msg.text }}</p>
           </div>
         </div>
+        {% if msg.user_id != g.user.id%}
         <form action="/messages/{{msg.id}}/toggle-like" method="POST">
           {{ g.csrf_form.hidden_tag() }}
-          <input type="hidden" value="/" name="from-page">
-          {% if msg in liked_messages %}
+          <input type="hidden" value="{{from_end_point}}" name="from-page">
+          {% if msg in g.user.liked_messages %}
           <button type="submit" class="bi like-button border-0 bi-star-fill filled-gold"></button>
           {% else %}
           <button type="submit" class="bi like-button border-0 bi-star"></button>
           {% endif %}
         </form>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>
