@@ -363,23 +363,27 @@ def delete_message(message_id):
 
     return redirect(f"/users/{g.user.id}")
 
-@app.post('/messages/<int:msg_id>/like')
-def add_liked_message(msg_id):
+@app.post('/messages/<int:msg_id>/toggle-like')
+def toggle_liked_message(msg_id):
+    """Toggles a message's liked status for the current user."""
 
     form = g.csrf_form
 
     if (not g.user) or (not form.validate_on_submit()):
         flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
-    
+
     message = Message.query.get(msg_id)
-    message.liked_by_users.append(g.user)
+
+    if g.user in message.liked_by_users:
+        message.liked_by_users.remove(g.user)
+    else:
+        message.liked_by_users.append(g.user)
 
     db.session.commit()
 
     #TODO: see if we can do this in WTforms
     return redirect(request.form['from-page'])
-    # message 
 
 
 ##############################################################################
@@ -395,16 +399,20 @@ def homepage():
     """
 
     if g.user:
+
+        # the user ids for who we will display their messages on our homepage
         user_ids = [user.id for user in g.user.following]
         user_ids.append(g.user.id)
 
-    #TODO: FIX STAR CHANGE COLOR CHECK IF IN LIKED MESSAGES
+        #TODO: FIX STAR CHANGE COLOR CHECK IF IN LIKED MESSAGES
         messages = (Message.query
             .filter(Message.user_id.in_(user_ids))
             .order_by(Message.timestamp.desc())
             .limit(100).all())
 
-        return render_template('home.html', messages=messages)
+        liked_messages = g.user.liked_messages
+
+        return render_template('home.html', messages=messages, liked_messages=liked_messages)
 
     else:
         return render_template('home-anon.html')
