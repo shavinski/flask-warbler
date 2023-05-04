@@ -178,12 +178,15 @@ def show_user(user_id):
 
 @app.get('/users/<int:user_id>/likes')
 def show_user_liked_messages(user_id):
+    """Display like messages on user page"""
 
     if not g.user:
         flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
-    return render_template('home.html', messages=g.user.liked_messages, from_end_point=f'/users/{g.user.id}/likes')
+    return render_template('home.html', 
+                           messages=g.user.liked_messages, 
+                           from_end_point=f'/users/{g.user.id}/likes')
 
 
 
@@ -424,7 +427,11 @@ def homepage():
 
         liked_messages = g.user.liked_messages
 
-        return render_template('home.html', messages=messages, liked_messages=liked_messages, from_end_point='/')
+        return render_template(
+            'home.html', 
+            messages=messages, 
+            liked_messages=liked_messages, 
+            from_end_point='/')
 
     else:
         return render_template('home-anon.html')

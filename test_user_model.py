@@ -102,8 +102,7 @@ class UserModelTestCase(TestCase):
         db.session.add(u)
 
         with self.assertRaises(
-            IntegrityError,
-            "should disallow duplicate usernames"):
+            IntegrityError):
 
             db.session.commit()
 
@@ -113,9 +112,26 @@ class UserModelTestCase(TestCase):
         db.session.add(u3)
 
         with self.assertRaises(
-            IntegrityError,
-            "should disallow duplicate emails"):
+            IntegrityError):
 
             db.session.commit()
+        
+    def test_user_authentication_valid(self):
+
+        u1 = User.query.get(self.u1_id)
+
+        self.assertTrue(u1.authenticate(u1.username, "password"))
+       
+
+    def test_user_authentication_invalid(self):
+
+        u1 = User.query.get(self.u1_id)
+
+        self.assertFalse(u1.authenticate("bad_username", "password"))
+        self.assertFalse(u1.authenticate(u1.username, "bad_password"))
+
+
+
+
 
 
