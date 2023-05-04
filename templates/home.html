@@ -58,6 +58,12 @@
               <p>{{ msg.text }}</p>
             </div>
           </li>
+          <form action="/messages/{{msg.id}}/like" method="POST">
+            {{ g.csrf_form.hidden_tag() }}
+            <input type="hidden" value="/" name="from-page">
+            <button type="submit"class="bi bi-star">
+            </button>
+          </form>
         {% endfor %}
       </ul>
     </div>

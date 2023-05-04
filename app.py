@@ -363,6 +363,24 @@ def delete_message(message_id):
 
     return redirect(f"/users/{g.user.id}")
 
+@app.post('/messages/<int:msg_id>/like')
+def add_liked_message(msg_id):
+
+    form = g.csrf_form
+
+    if (not g.user) or (not form.validate_on_submit()):
+        flash(ACCESS_UNAUTHORIZED_MSG, "danger")
+        return redirect("/")
+    
+    message = Message.query.get(msg_id)
+    message.liked_by_users.append(g.user)
+
+    db.session.commit()
+
+    #TODO: see if we can do this in WTforms
+    return redirect(request.form['from-page'])
+    # message 
+
 
 ##############################################################################
 # Homepage and error pages
@@ -380,6 +398,7 @@ def homepage():
         user_ids = [user.id for user in g.user.following]
         user_ids.append(g.user.id)
 
+    #TODO: FIX STAR CHANGE COLOR CHECK IF IN LIKED MESSAGES
         messages = (Message.query
             .filter(Message.user_id.in_(user_ids))
             .order_by(Message.timestamp.desc())
