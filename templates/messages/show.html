@@ -47,9 +47,23 @@
             {% endif %}
           </div>
           <p class="single-message">{{ message.text }}</p>
-          <span class="text-muted">
-              {{ message.timestamp.strftime('%d %B %Y') }}
-            </span>
+          <div class="d-flex justify-content-between">
+            <span class="text-muted">
+                {{ message.timestamp.strftime('%d %B %Y') }}
+              </span>
+            {% if message.user_id != g.user.id%}
+            <form action="/messages/{{message.id}}/toggle-like" method="POST">
+              {{ g.csrf_form.hidden_tag() }}
+              <input type="hidden" value="/messages/{{message.id}}" name="from-page">
+              <!-- TODO: Think about using a set here -->
+              {% if message in g.user.liked_messages %}
+              <button type="submit" class="bi like-button border-0 bi-star-fill filled-gold"></button>
+              {% else %}
+              <button type="submit" class="bi like-button border-0 bi-star"></button>
+              {% endif %}
+            </form>
+            {% endif %}
+          </div>
         </div>
       </li>
     </ul>
