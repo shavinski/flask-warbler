@@ -71,3 +71,159 @@ class MessageAddViewTestCase(MessageBaseViewTestCase):
             self.assertEqual(resp.status_code, 302)
 
             Message.query.filter_by(text="Hello").one()
+
+
+    def test_anon_get_homepage(self):
+        with self.client as c:
+            resp = c.get("/")
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<!-- home-anon template id -->", html)
+
+
+    def test_logged_in_get_homepage(self):
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.u1_id
+
+            resp = c.get("/")
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<!-- home template id -->", html)
+
+
+    def test_anon_get_login(self):
+        with self.client as c:
+            resp = c.get("/login")
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<!-- login template id -->", html)
+
+
+    def test_logged_get_login(self):
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.u1_id
+            resp = c.get("/login", follow_redirects = True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertIn("<!-- home template id -->", html)
+            self.assertIn("You are already logged in!", html)
+
+
+    def test_do_login_success(self):
+        with self.client as c:
+            resp = c.post(
+                "/login",
+                data={'username': 'u1', 'password': 'password'},
+                follow_redirects = True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertIn("<!-- home template id -->", html)
+            self.assertIn("Hello, u1", html)
+
+
+    def test_do_login_failure(self):
+        with self.client as c:
+
+            # test with invalid password
+            resp = c.post(
+                "/login",
+                data={'username': 'u1', 'password': 'someabsolutenonsense'},
+                follow_redirects = True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertIn("<!-- login template id -->", html)
+            self.assertIn("Invalid credentials.", html)
+
+            # test with invalid username
+            resp = c.post(
+                "/login",
+                data={'username': 'someabsolutenonsense', 'password': 'password'},
+                follow_redirects = True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertIn("<!-- login template id -->", html)
+            self.assertIn("Invalid credentials.", html)
+
+
+    def test_anon_view_profile(self):
+        with self.client as c:
+            resp = c.get("/users/1", follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<!-- home-anon template id -->", html)
+            self.assertIn("Access unauthorized.", html)
+
+
+    def test_logged_view_profile(self):
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.u1_id
+            resp = c.get(f"/users/{self.u1_id}", follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<!-- show template id -->", html)
+            self.assertIn("@u1", html)
+
+
+    def test_post_message_failure(self):
+        with self.client as c:
+            resp = c.post(
+                "/messages/new",
+                data={'text': 'test text 1234'},
+                follow_redirects = True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertIn("<!-- home-anon template id -->", html)
+            self.assertIn("Access unauthorized.", html)
+
+
+    def test_post_message_success(self):
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.u1_id
+
+            resp = c.post(
+                "/messages/new",
+                data={'text': 'test text 1234'},
+                follow_redirects = True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertIn("<!-- show template id -->", html)
+            self.assertIn("test text 1234", html)
+
+
+    #TODO:
+    # When you’re logged in, can you delete a message as yourself?
+    # When you’re logged out, are you prohibited from adding messages?
+    # When you’re logged out, are you prohibited from deleting messages?
+    # When you’re logged in, are you prohibited from deleting another user’s message?

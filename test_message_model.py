@@ -36,7 +36,7 @@ class MessageModelTestCase(TestCase):
 
         u1 = User.signup("u1", "u1@email.com", "password", None)
         u2 = User.signup("u2", "u2@email.com", "password", None)
-        db.session.commit()
+        db.session.flush()
 
         message_1 = Message(text = 'test message 1', user_id = u1.id)
         message_2 = Message(text = 'test message 2', user_id = u2.id)
@@ -55,8 +55,8 @@ class MessageModelTestCase(TestCase):
 
     #TODO: test u1.messages contains the messages the user have created
     # test that u1.messages does not contain any messages the user did not create
-    # test that u1 likes a u2 message and in the message_2.liked_by_users contains u1 
-    # test that a message text is equivalent to the actual message text 
+    # test that u1 likes a u2 message and in the message_2.liked_by_users contains u1
+    # test that a message text is equivalent to the actual message text
 
     def test_text_in_message(self):
 

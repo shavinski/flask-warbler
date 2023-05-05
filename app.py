@@ -109,6 +109,10 @@ def login():
 
     form = LoginForm()
 
+    if g.user:
+        flash("You are already logged in!", 'info')
+        return redirect("/")
+
     if form.validate_on_submit():
         user = User.authenticate(
             form.username.data,
@@ -184,8 +188,8 @@ def show_user_liked_messages(user_id):
         flash(ACCESS_UNAUTHORIZED_MSG, "danger")
         return redirect("/")
 
-    return render_template('home.html', 
-                           messages=g.user.liked_messages, 
+    return render_template('home.html',
+                           messages=g.user.liked_messages,
                            from_end_point=f'/users/{g.user.id}/likes')
 
 
@@ -428,9 +432,9 @@ def homepage():
         liked_messages = g.user.liked_messages
 
         return render_template(
-            'home.html', 
-            messages=messages, 
-            liked_messages=liked_messages, 
+            'home.html',
+            messages=messages,
+            liked_messages=liked_messages,
             from_end_point='/')
 
     else:
