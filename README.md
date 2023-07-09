@@ -33,28 +33,34 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ## Installation
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone git@github.com:shavinski/flask-warbler.git
    ```
-2. Install NPM packages
+2. Create a virtual environment and download requirements.txt
    ```sh
-   npm install
+    python3 -m venv venv
+    source venv/bin/activate
+    pip3 install -r requirements.txt
    ```
-3. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+3. Set up a database with dummy data (PSQL)
+   ```sh
+   psql
+   CREATE DATABASE warbler;
+   (ctrl+d or cmd+d) 
+   python3 seed.py
    ```
+4. Add a .env file
+  ```sh
+  SECRET_KEY=(any secret key you want)
+  DATABASE_URL=postgresql:///warbler
+  ```
+5. Run on your local server
+ ```sh
+   flask run -p 5001
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
