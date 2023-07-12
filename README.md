@@ -93,7 +93,7 @@
 <!-- CONTACT -->
 ## Contact
 
-Email: shavinski.dev@example.com
+Email: shavinski.jakob@gmail.com
 
 LinkedIn: https://www.linkedin.com/in/jakob-shavinski/
 
