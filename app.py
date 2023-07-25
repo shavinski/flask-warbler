@@ -18,6 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+app.config['WTF_CSRF_ENABLED'] = False
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)

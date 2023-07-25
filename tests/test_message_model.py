@@ -1,3 +1,4 @@
+
 """User model tests."""
 
 # run these tests like:
@@ -6,6 +7,7 @@
 
 
 import os
+import pytest 
 from unittest import TestCase
 
 from models import db, User, Message, Follow

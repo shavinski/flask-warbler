@@ -1,3 +1,6 @@
+import pytest 
+from app import app
+
 """User model tests."""
 
 # run these tests like:

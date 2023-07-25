@@ -1,3 +1,6 @@
+import pytest 
+from app import app
+
 """Message View tests."""
 
 # run these tests like:
