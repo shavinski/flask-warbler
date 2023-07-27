@@ -56,7 +56,7 @@
   ```
 5. Run on your local server
   ```sh
-  Flask run -p 5001
+  flask run 
   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
