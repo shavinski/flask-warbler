@@ -61,7 +61,6 @@
         <form action="/messages/{{msg.id}}/toggle-like" method="POST">
           {{ g.csrf_form.hidden_tag() }}
           <input type="hidden" value="{{from_end_point}}" name="from-page">
-          <!-- TODO: Think about using a set here -->
           {% if msg in g.user.liked_messages %}
           <button type="submit" class="bi like-button border-0 bi-star-fill filled-gold"></button>
           {% else %}
