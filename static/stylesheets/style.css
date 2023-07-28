@@ -53,6 +53,7 @@ body.error-404 {
 }
 
 .nav>li>a>img {
+  height: 70px;
   width: 70px;
   border-radius: 32px;
 }
@@ -187,7 +188,9 @@ nav+.container {
   height: 360px;
   margin-top: -16px;
   opacity: 0.7;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+
   background-position: top center;
 }
 
@@ -313,6 +316,14 @@ nav+.container {
   font-size: 25px;
 }
 
+.follow-user-location {
+  color: #657786;
+  font-size: 25px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+
 .user-bio {
   color: #657786;
   font-size: 30px;
@@ -329,7 +340,7 @@ nav+.container {
   border: 1px solid #ccc;
   position: relative;
   background: white;
-  margin-top: 200px;
+  margin-top: 25px;
 }
 
 .user-card>div {
@@ -338,13 +349,14 @@ nav+.container {
 }
 
 .user-card form {
-  margin-top: 5px;
-  margin-right: 5px;
+  margin-top: 15px;
+  margin-right: 15px;
 }
 
 .user-card form .btn {
   min-width: 89px;
   padding: 4px 12px;
+  font-size: 30px;
 }
 
 .card-hero {
@@ -359,8 +371,18 @@ nav+.container {
 .card-image {
   border: 3px solid #fff;
   border-radius: 70px;
-  height: 22%;
-  width: 22%;
+  height: 150px;
+  width: 150px;
+  margin-top: -35px;
+  position: relative;
+  z-index: 1;
+}
+
+.follower-image {
+  border: 3px solid #fff;
+  border-radius: 70px;
+  height: auto;
+  width: 15vw;
   margin-top: -35px;
   position: relative;
   z-index: 1;
@@ -373,8 +395,8 @@ nav+.container {
 
 .card-link>p {
   position: absolute;
-  font-size: 40px;
-  margin-top: -35px;
+  font-size: 35px;
+  margin-top: -8px;
 }
 
 .user-cards {
@@ -401,6 +423,27 @@ nav+.container {
 
 p.card-bio {
   margin: 2em 10px 0;
+  font-size: 25px;
+}
+
+.alert {
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+}
+
+.form-input {
+  height: 75px;
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+  margin-bottom: 15px;
+}
+
+.form-tag {
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+}
+
+.edit-btn-area button,
+.edit-btn-area a {
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+  margin-bottom: 30px;
 }
 
 @media (min-width: 991px) {
@@ -424,6 +467,10 @@ p.card-bio {
     font-size: 15px;
   }
 
+  .create-warb {
+    font-size: clamp(1em, 12vw + 1rem, 3em);
+  }
+
   .profile-message-container {
     display: flex;
     font-size: 20px;
@@ -438,6 +485,37 @@ p.card-bio {
     padding: 6px 16px;
     margin-top: 0px;
     margin-bottom: 0px;
+    font-size: 15px;
+  }
+
+  .card-image {
+    height: 100px;
+    width: 100px;
+  }
+
+  .follower-image {
+    height: auto;
+    width: 90px;
+  }
+
+  .card-link>p {
+    position: absolute;
+    font-size: 25px;
+    margin-top: -8px;
+  }
+
+  p.card-bio {
+    margin: 2em 10px 0;
+    font-size: 15px;
+  }
+
+  .user-card form .btn {
+    min-width: 89px;
+    padding: 4px 12px;
+    font-size: 15px;
+  }
+
+  .follow-user-location {
     font-size: 15px;
   }
 }
@@ -457,11 +535,11 @@ p.card-bio {
   z-index: -1;
   background-image: url("/static/images/signed-out-home.jpg");
   background-size: cover;
-  background-position: center center;
-  color: rgb(0, 0, 0);
+  background-position: center;
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 1rem;
-  text-shadow: 0 2px 3px #000000;
+  text-shadow: 0 2px 5px #000000;
 }
 
 .home-hero .btn {
@@ -593,11 +671,14 @@ p.card-bio {
   display: flex;
   justify-content: space-between;
   height: 47px;
-  margin-top: 3px;
+  font-size: 40px;
+  margin-top: 5px;
+  margin-bottom: 35px;
 }
 
 #messages.no-hover .message-heading .btn {
   min-width: 105px;
+  font-size: 30px;
 }
 
 .messages-like {
@@ -619,6 +700,17 @@ p.card-bio {
   line-height: 32px;
   letter-spacing: 0.01em;
   margin-bottom: 10px;
+}
+
+.single-show-message {
+  font-size: 40px;
+  line-height: 35px;
+  letter-spacing: 0.01em;
+  margin-bottom: 10px;
+}
+
+.show-text-muted {
+  font-size: 30px;
 }
 
 /* ================================ 404 page */

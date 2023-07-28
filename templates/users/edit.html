@@ -3,9 +3,9 @@
 {% block content %}
 
   <div class="row justify-content-md-center">
-    <div class="col-md-4">
+    <div class="col-sm-8 col-lg-10">
       <h2 class="join-message">Edit Your Profile.</h2>
-      <form method="POST" id="user_form">
+      <form method="POST" id="user_form" class="d-flex flex-column">
         {{ form.hidden_tag() }}
 
         {% for field in form if
@@ -14,10 +14,13 @@
           {% for error in field.errors %}
             <span class="text-danger">{{ error }}</span>
           {% endfor %}
-          {{ field(placeholder=field.label.text, class="form-control") }}
+          <div class="d-flex flex-column">
+            {{ field.label(class="form-tag") }}
+            {{ field(placeholder=field.label.text, class="form-input") }}
+          </div>
         {% endfor %}
 
-        <p>To confirm changes, enter your password:</p>
+        <p class="form-tag">To confirm changes, enter your password:</p>
 
         {% if form.password.errors %}
           {% for error in form.password.errors %}
@@ -28,8 +31,8 @@
         {% endif %}
 
         {{ form.password(
-            placeholder="Enter your password to confirm",
-            class="form-control") }}
+            placeholder="Enter your password",
+            class="form-input") }}
         <div class="edit-btn-area">
           <button class="btn btn-success">Edit this user!</button>
           <a href="/users/{{ user_id }}" class="btn btn-outline-secondary">Cancel</a>

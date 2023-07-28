@@ -88,9 +88,13 @@
       <span class="bi bi-map"></span>
       {{ user.location }}
     </p>
+    {% if g.user.id == user.id %}
     <div class="new-warb mt-4 mb-4">
       <a class="p-3" href="/messages/new">New Message</a></li>
     </div>
+    {% endif %}
+
+
   </div>
 
   {% block user_details %}
