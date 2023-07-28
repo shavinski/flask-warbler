@@ -63,7 +63,6 @@
             </form>
             {% else %}
             <form method="POST" action="/users/follow/{{ user.id }}">
-              <!-- TODO: is this the right way to handle it? -->
               {{ g.csrf_form.hidden_tag() }}
               <button class="btn btn-outline-primary">Follow</button>
             </form>
@@ -76,16 +75,22 @@
       </div>
     </div>
   </div>
+
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
-    <h4 id="sidebar-username">@{{ user.username }}</h4>
-    <p>{{ user.bio }}</p>
+  <div class="col-sm-12">
+    <div class="d-flex align-items-center">
+      <h4 id="sidebar-username">@{{ user.username }}</h4>
+    </div>
+    <p class="user-bio">{{ user.bio }}</p>
     <p class="user-location">
       <span class="bi bi-map"></span>
       {{ user.location }}
     </p>
+    <div class="new-warb mt-4 mb-4">
+      <a class="p-3" href="/messages/new">New Message</a></li>
+    </div>
   </div>
 
   {% block user_details %}

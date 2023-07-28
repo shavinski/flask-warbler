@@ -8,10 +8,6 @@ body.error-404 {
   background-color: #1da1f2;
 }
 
-.form-control {
-  margin-bottom: 20px;
-}
-
 .btn {
   border-radius: 50px;
 }
@@ -33,7 +29,7 @@ body.error-404 {
 
 .navbar a {
   color: #66757f;
-  font-size: clamp(1em, 1vw + 2.5rem, 1.5em);
+  font-size: clamp(1.5em, 1vw + 2rem, 2em);
   font-weight: bold;
   text-decoration: none;
   margin-right: 15px;
@@ -79,40 +75,6 @@ nav form.navbar-form {
   position: relative;
 }
 
-.search-input {
-  width: 300px !important;
-  padding: 1.4em;
-}
-
-#search.form-control {
-  border-radius: 20px;
-  margin-bottom: 0;
-  width: 100%;
-  font-size: 13px;
-  padding-right: 28px;
-  box-sizing: border-box;
-}
-
-#search.form-control+.btn {
-  position: absolute;
-  right: 9px;
-  top: 2px;
-  bottom: 4px;
-  z-index: 1;
-  padding: 0;
-  color: #66757f;
-}
-
-#search.form-control+.btn:active,
-#search.form-control+.btn:focus {
-  box-shadow: none;
-}
-
-#search:active,
-#search:focus {
-  box-shadow: none;
-  border: 2px solid #007bff;
-}
 
 /* on "onboarding" pages (signup & login), the navbar is
    different: no search box, the logo is centered, and it has
@@ -167,6 +129,7 @@ nav+.container {
 
 .join-message {
   margin-top: 100px;
+  font-size: clamp(3.5em, 1vw + 2.5rem, 3.5em);
 }
 
 #user-header-image {
@@ -196,10 +159,18 @@ nav+.container {
   box-shadow: 0 1px 1px rgba(136, 153, 166, 0.15);
 }
 
+.new-warb a {
+  font-size: 30px;
+  background-color: blue;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+}
+
 .timeline-image {
   border-radius: 48px;
-  height: 48px;
-  width: 48px;
+  height: 90px;
+  width: 90px;
   margin-top: 2px;
 }
 
@@ -235,7 +206,7 @@ nav+.container {
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
-  height: 60px;
+  /* height: 60px; */
   align-items: center;
 }
 
@@ -247,6 +218,9 @@ nav+.container {
 .user-stats>.ms-auto .btn {
   min-width: 105px;
   padding: 6px 16px;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-size: 30px;
 }
 
 .stat {
@@ -260,13 +234,14 @@ nav+.container {
 .stat>.small {
   color: #657786;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 30px;
+  /* font-size: clamp(1rem, 12vw + 1rem, 1rem); */
   letter-spacing: 0.02em;
   margin-bottom: 0;
 }
 
 .stat>.small+h4 {
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   padding-top: 3px;
 }
@@ -294,10 +269,13 @@ nav+.container {
   align-items: flex-start;
   justify-content: space-between;
   padding: 7px 20px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px #d0d0d0;
 }
 
 .profile-message-container {
   display: flex;
+  font-size: 35px;
 }
 
 #messages:not(.no-hover) .list-group-item:hover {
@@ -308,6 +286,7 @@ nav+.container {
   position: sticky;
   background: none;
   z-index: 5;
+  font-size: 40px;
 }
 
 .filled-gold {
@@ -316,7 +295,7 @@ nav+.container {
 
 #sidebar-username {
   margin-top: 30px;
-  font-size: 21px;
+  font-size: 35px;
   font-weight: bold;
   line-height: 28px;
   word-wrap: break-word;
@@ -326,22 +305,31 @@ nav+.container {
   .full-width .user-stats .stat {
     display: none;
   }
+
 }
 
 .user-location {
   color: #657786;
+  font-size: 25px;
+}
+
+.user-bio {
+  color: #657786;
+  font-size: 30px;
 }
 
 /* ==================== User cards on follower/following pages */
 
 .user-card {
+  position: relative;
   width: 100%;
-  padding-bottom: 100%;
+  height: 20vh;
+  padding-bottom: 90%;
   border-radius: 5px;
   border: 1px solid #ccc;
   position: relative;
   background: white;
-  margin-top: 20px;
+  margin-top: 200px;
 }
 
 .user-card>div {
@@ -357,7 +345,6 @@ nav+.container {
 .user-card form .btn {
   min-width: 89px;
   padding: 4px 12px;
-  font-size: 12px;
 }
 
 .card-hero {
@@ -372,8 +359,8 @@ nav+.container {
 .card-image {
   border: 3px solid #fff;
   border-radius: 70px;
-  height: 70px;
-  width: 70px;
+  height: 22%;
+  width: 22%;
   margin-top: -35px;
   position: relative;
   z-index: 1;
@@ -386,6 +373,8 @@ nav+.container {
 
 .card-link>p {
   position: absolute;
+  font-size: 40px;
+  margin-top: -35px;
 }
 
 .user-cards {
@@ -414,6 +403,45 @@ p.card-bio {
   margin: 2em 10px 0;
 }
 
+@media (min-width: 991px) {
+  .card-link>p {
+    position: absolute;
+    font-size: 18px;
+    margin-top: -35px;
+  }
+
+  .stat>.small {
+    font-size: 13px;
+    /* font-size: clamp(1rem, 12vw + 1rem, 1rem); */
+
+  }
+
+  .stat>.small+h4 {
+    font-size: 13px;
+  }
+
+  .new-warb a {
+    font-size: 15px;
+  }
+
+  .profile-message-container {
+    display: flex;
+    font-size: 20px;
+  }
+
+  .like-button {
+    font-size: 20px;
+  }
+
+  .user-stats>.ms-auto .btn {
+    min-width: 105px;
+    padding: 6px 16px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 15px;
+  }
+}
+
 /* ============================ Signed out home */
 
 .home-hero {
@@ -430,10 +458,10 @@ p.card-bio {
   background-image: url("/static/images/signed-out-home.jpg");
   background-size: cover;
   background-position: center center;
-  color: #fff;
+  color: rgb(0, 0, 0);
   text-align: center;
   padding: 1rem;
-  text-shadow: 0 0 8px #66757f;
+  text-shadow: 0 2px 3px #000000;
 }
 
 .home-hero .btn {
@@ -468,6 +496,21 @@ p.card-bio {
 }
 
 /* ============================== Signed in Home */
+
+.search-form {
+  width: 100%;
+}
+
+.search-container input {
+  font-size: clamp(1em, 1vw + 1em, 1.5em);
+  max-height: 100px;
+  padding: 20px;
+}
+
+.search-input {
+  font-size: clamp(1.5em, 1vw + 1.5rem, 1.5em);
+  border-radius: 10px;
+}
 
 #home-aside>.user-card {
   margin-top: 0;
@@ -506,10 +549,18 @@ p.card-bio {
 
 /* ========================== Signup/Login */
 
+
 #user_form input.form-control {
-  font-size: 20px;
+  font-size: clamp(1.5em, 1vw + 1.5rem, 1.5em);
   font-weight: bold;
+  height: 100px;
   padding: 1em;
+  margin-bottom: 40px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 1rem 1.5rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  width: 100%;
 }
 
 /* =========================== Edit Page */
@@ -564,7 +615,7 @@ p.card-bio {
 }
 
 .single-message {
-  font-size: 27px;
+  font-size: 50px;
   line-height: 32px;
   letter-spacing: 0.01em;
   margin-bottom: 10px;
