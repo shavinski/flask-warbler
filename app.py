@@ -278,6 +278,7 @@ def profile():
         image_url = form.image_url.data
         header_image_url = form.header_image_url.data
         bio = form.bio.data
+        location = form.location.data
         password = form.password.data
         is_auth = bcrypt.check_password_hash(g.user.password, password)
 
@@ -286,6 +287,7 @@ def profile():
             g.user.email = email
             g.user.image_url = image_url
             g.user.header_image_url = header_image_url
+            g.user.location = location
             g.user.bio = bio
             db.session.commit()
             return redirect(f'/users/{g.user.id}')

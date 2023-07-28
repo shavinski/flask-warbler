@@ -4,7 +4,7 @@
 
 <div class="bg"></div>
 <div class="row justify-content-center">
-  <div class="col-md-6">
+  <div class="col-12">
     <ul class="list-group no-hover" id="messages">
       <li class="list-group-item">
 
@@ -46,9 +46,9 @@
             {% endif %}
             {% endif %}
           </div>
-          <p class="single-message">{{ message.text }}</p>
+          <p class="single-show-message">{{ message.text }}</p>
           <div class="d-flex justify-content-between">
-            <span class="text-muted">
+            <span class="show-text-muted">
                 {{ message.timestamp.strftime('%d %B %Y') }}
               </span>
             {% if message.user_id != g.user.id%}

@@ -72,6 +72,10 @@ class UpdateUserForm(FlaskForm):
         validators=[Optional(), URL(), Length(max=255)]
     )
 
+    location = StringField(
+        'Location'
+    )
+
     bio = StringField(
         'Bio'
     )

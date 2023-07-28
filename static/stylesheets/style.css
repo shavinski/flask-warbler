@@ -8,10 +8,6 @@ body.error-404 {
   background-color: #1da1f2;
 }
 
-.form-control {
-  margin-bottom: 20px;
-}
-
 .btn {
   border-radius: 50px;
 }
@@ -24,7 +20,7 @@ body.error-404 {
 
 .navbar {
   background-color: #fff;
-  height: 46px;
+  height: 10vh;
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   margin-bottom: 1rem;
   position: relative;
@@ -33,8 +29,10 @@ body.error-404 {
 
 .navbar a {
   color: #66757f;
-  font-size: 13px;
+  font-size: clamp(1.5em, 1vw + 2rem, 2em);
   font-weight: bold;
+  text-decoration: none;
+  margin-right: 15px;
 }
 
 .navbar a:hover {
@@ -46,16 +44,17 @@ body.error-404 {
   align-items: center;
 }
 
-.navbar-brand > img {
+.navbar-brand>img {
   display: inline-block;
   margin-bottom: 2px;
   margin-right: 5px;
-  width: 20px;
+  width: 70px;
   border-radius: 2px;
 }
 
-.nav > li > a > img {
-  width: 32px;
+.nav>li>a>img {
+  height: 70px;
+  width: 70px;
   border-radius: 32px;
 }
 
@@ -68,47 +67,22 @@ ul.nav.navbar-nav li {
   display: flex;
 }
 
+.logout-btn {
+  font-size: clamp(1em, 1vw + 2.5rem, 1.5em);
+}
+
 nav form.navbar-form {
   display: flex;
   position: relative;
 }
 
-#search.form-control {
-  border-radius: 20px;
-  margin-bottom: 0;
-  width: 100%;
-  font-size: 13px;
-  padding-right: 28px;
-  box-sizing: border-box;
-}
-
-#search.form-control + .btn {
-  position: absolute;
-  right: 9px;
-  top: 2px;
-  bottom: 4px;
-  z-index: 1;
-  padding: 0;
-  color: #66757f;
-}
-
-#search.form-control + .btn:active,
-#search.form-control + .btn:focus {
-  box-shadow: none;
-}
-
-#search:active,
-#search:focus {
-  box-shadow: none;
-  border: 2px solid #007bff;
-}
 
 /* on "onboarding" pages (signup & login), the navbar is
    different: no search box, the logo is centered, and it has
    a background color.
  */
 
-.onboarding > .navbar {
+.onboarding>.navbar {
   background-image: url("/static/images/nav-bg.png");
   background-size: 100% 100%;
 }
@@ -130,11 +104,11 @@ nav form.navbar-form {
   right: 16px;
 }
 
-.onboarding > .navbar a {
+.onboarding>.navbar a {
   color: #fff;
 }
 
-.onboarding > .navbar form.navbar-form {
+.onboarding>.navbar form.navbar-form {
   display: none;
 }
 
@@ -148,7 +122,7 @@ nav form.navbar-form {
   }
 }
 
-nav + .container {
+nav+.container {
   margin-bottom: 1rem;
 }
 
@@ -156,6 +130,7 @@ nav + .container {
 
 .join-message {
   margin-top: 100px;
+  font-size: clamp(3.5em, 1vw + 2.5rem, 3.5em);
 }
 
 #user-header-image {
@@ -185,10 +160,18 @@ nav + .container {
   box-shadow: 0 1px 1px rgba(136, 153, 166, 0.15);
 }
 
+.new-warb a {
+  font-size: 30px;
+  background-color: blue;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+}
+
 .timeline-image {
   border-radius: 48px;
-  height: 48px;
-  width: 48px;
+  height: 90px;
+  width: 90px;
   margin-top: 2px;
 }
 
@@ -205,7 +188,9 @@ nav + .container {
   height: 360px;
   margin-top: -16px;
   opacity: 0.7;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+
   background-position: top center;
 }
 
@@ -224,18 +209,21 @@ nav + .container {
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #ccc;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
-  height: 60px;
+  /* height: 60px; */
   align-items: center;
 }
 
-.user-stats > .ms-auto {
+.user-stats>.ms-auto {
   display: flex;
   align-items: center;
 }
 
-.user-stats > .ms-auto .btn {
+.user-stats>.ms-auto .btn {
   min-width: 105px;
   padding: 6px 16px;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-size: 30px;
 }
 
 .stat {
@@ -246,16 +234,17 @@ nav + .container {
   line-height: 1;
 }
 
-.stat > .small {
+.stat>.small {
   color: #657786;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 30px;
+  /* font-size: clamp(1rem, 12vw + 1rem, 1rem); */
   letter-spacing: 0.02em;
   margin-bottom: 0;
 }
 
-.stat > .small + h4 {
-  font-size: 18px;
+.stat>.small+h4 {
+  font-size: 25px;
   font-weight: bold;
   padding-top: 3px;
 }
@@ -283,10 +272,13 @@ nav + .container {
   align-items: flex-start;
   justify-content: space-between;
   padding: 7px 20px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px #d0d0d0;
 }
 
 .profile-message-container {
   display: flex;
+  font-size: 35px;
 }
 
 #messages:not(.no-hover) .list-group-item:hover {
@@ -297,6 +289,7 @@ nav + .container {
   position: sticky;
   background: none;
   z-index: 5;
+  font-size: 40px;
 }
 
 .filled-gold {
@@ -305,7 +298,7 @@ nav + .container {
 
 #sidebar-username {
   margin-top: 30px;
-  font-size: 21px;
+  font-size: 35px;
   font-weight: bold;
   line-height: 28px;
   word-wrap: break-word;
@@ -315,38 +308,55 @@ nav + .container {
   .full-width .user-stats .stat {
     display: none;
   }
+
 }
 
 .user-location {
   color: #657786;
+  font-size: 25px;
+}
+
+.follow-user-location {
+  color: #657786;
+  font-size: 25px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+
+.user-bio {
+  color: #657786;
+  font-size: 30px;
 }
 
 /* ==================== User cards on follower/following pages */
 
 .user-card {
+  position: relative;
   width: 100%;
-  padding-bottom: 100%;
+  height: 20vh;
+  padding-bottom: 90%;
   border-radius: 5px;
   border: 1px solid #ccc;
   position: relative;
   background: white;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
-.user-card > div {
+.user-card>div {
   position: absolute;
   background: white;
 }
 
 .user-card form {
-  margin-top: 5px;
-  margin-right: 5px;
+  margin-top: 15px;
+  margin-right: 15px;
 }
 
 .user-card form .btn {
   min-width: 89px;
   padding: 4px 12px;
-  font-size: 12px;
+  font-size: 30px;
 }
 
 .card-hero {
@@ -361,8 +371,18 @@ nav + .container {
 .card-image {
   border: 3px solid #fff;
   border-radius: 70px;
-  height: 70px;
-  width: 70px;
+  height: 150px;
+  width: 150px;
+  margin-top: -35px;
+  position: relative;
+  z-index: 1;
+}
+
+.follower-image {
+  border: 3px solid #fff;
+  border-radius: 70px;
+  height: auto;
+  width: 15vw;
   margin-top: -35px;
   position: relative;
   z-index: 1;
@@ -373,8 +393,10 @@ nav + .container {
   margin-left: 10px;
 }
 
-.card-link > p {
+.card-link>p {
   position: absolute;
+  font-size: 35px;
+  margin-top: -8px;
 }
 
 .user-cards {
@@ -401,6 +423,101 @@ nav + .container {
 
 p.card-bio {
   margin: 2em 10px 0;
+  font-size: 25px;
+}
+
+.alert {
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+}
+
+.form-input {
+  height: 75px;
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+  margin-bottom: 15px;
+}
+
+.form-tag {
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+}
+
+.edit-btn-area button,
+.edit-btn-area a {
+  font-size: clamp(1em, 12vw + 1rem, 2em);
+  margin-bottom: 30px;
+}
+
+@media (min-width: 991px) {
+  .card-link>p {
+    position: absolute;
+    font-size: 18px;
+    margin-top: -35px;
+  }
+
+  .stat>.small {
+    font-size: 13px;
+    /* font-size: clamp(1rem, 12vw + 1rem, 1rem); */
+
+  }
+
+  .stat>.small+h4 {
+    font-size: 13px;
+  }
+
+  .new-warb a {
+    font-size: 15px;
+  }
+
+  .create-warb {
+    font-size: clamp(1em, 12vw + 1rem, 3em);
+  }
+
+  .profile-message-container {
+    display: flex;
+    font-size: 20px;
+  }
+
+  .like-button {
+    font-size: 20px;
+  }
+
+  .user-stats>.ms-auto .btn {
+    min-width: 105px;
+    padding: 6px 16px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 15px;
+  }
+
+  .card-image {
+    height: 100px;
+    width: 100px;
+  }
+
+  .follower-image {
+    height: auto;
+    width: 90px;
+  }
+
+  .card-link>p {
+    position: absolute;
+    font-size: 25px;
+    margin-top: -8px;
+  }
+
+  p.card-bio {
+    margin: 2em 10px 0;
+    font-size: 15px;
+  }
+
+  .user-card form .btn {
+    min-width: 89px;
+    padding: 4px 12px;
+    font-size: 15px;
+  }
+
+  .follow-user-location {
+    font-size: 15px;
+  }
 }
 
 /* ============================ Signed out home */
@@ -418,11 +535,11 @@ p.card-bio {
   z-index: -1;
   background-image: url("/static/images/signed-out-home.jpg");
   background-size: cover;
-  background-position: center center;
-  color: #fff;
+  background-position: center;
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 1rem;
-  text-shadow: 0 0 8px #66757f;
+  text-shadow: 0 2px 5px #000000;
 }
 
 .home-hero .btn {
@@ -434,6 +551,16 @@ p.card-bio {
 
 .home-hero h1 {
   margin-bottom: 4rem;
+  font-size: clamp(3.5em, 1vw + 3rem, 4.5em);
+}
+
+.home-hero h4 {
+  font-size: clamp(3.5em, 1vw + 2.5rem, 4.5em);
+}
+
+.home-hero p,
+.home-hero a {
+  font-size: clamp(1em, 1vw + 1rem, 2em);
 }
 
 .home-hero:before {
@@ -448,34 +575,49 @@ p.card-bio {
 
 /* ============================== Signed in Home */
 
-#home-aside > .user-card {
+.search-form {
+  width: 100%;
+}
+
+.search-container input {
+  font-size: clamp(1em, 1vw + 1em, 1.5em);
+  max-height: 100px;
+  padding: 20px;
+}
+
+.search-input {
+  font-size: clamp(1.5em, 1vw + 1.5rem, 1.5em);
+  border-radius: 10px;
+}
+
+#home-aside>.user-card {
   margin-top: 0;
   overflow: hidden;
 }
 
-#home-aside > .user-card .card-link {
+#home-aside>.user-card .card-link {
   display: flex;
 }
 
-#home-aside > .user-card .card-link > p {
+#home-aside>.user-card .card-link>p {
   margin-left: 0.5rem;
   margin-top: 0.25rem;
 }
 
-#home-aside > .user-card .stat {
+#home-aside>.user-card .stat {
   padding: 14px 0 7px;
 }
 
-#home-aside > .user-card .user-stats {
+#home-aside>.user-card .user-stats {
   display: flex;
   justify-content: space-around;
 }
 
-#home-aside > .user-card > div {
+#home-aside>.user-card>div {
   width: 100%;
 }
 
-#home-aside .card-link > p {
+#home-aside .card-link>p {
   position: relative;
 }
 
@@ -485,10 +627,18 @@ p.card-bio {
 
 /* ========================== Signup/Login */
 
+
 #user_form input.form-control {
-  font-size: 18px;
+  font-size: clamp(1.5em, 1vw + 1.5rem, 1.5em);
   font-weight: bold;
-  padding: 12px;
+  height: 100px;
+  padding: 1em;
+  margin-bottom: 40px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 1rem 1.5rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  width: 100%;
 }
 
 /* =========================== Edit Page */
@@ -498,7 +648,7 @@ p.card-bio {
   justify-content: space-between;
 }
 
-.edit-btn-area > .btn {
+.edit-btn-area>.btn {
   width: 48%;
 }
 
@@ -521,11 +671,14 @@ p.card-bio {
   display: flex;
   justify-content: space-between;
   height: 47px;
-  margin-top: 3px;
+  font-size: 40px;
+  margin-top: 5px;
+  margin-bottom: 35px;
 }
 
 #messages.no-hover .message-heading .btn {
   min-width: 105px;
+  font-size: 30px;
 }
 
 .messages-like {
@@ -543,10 +696,21 @@ p.card-bio {
 }
 
 .single-message {
-  font-size: 27px;
+  font-size: 50px;
   line-height: 32px;
   letter-spacing: 0.01em;
   margin-bottom: 10px;
+}
+
+.single-show-message {
+  font-size: 40px;
+  line-height: 35px;
+  letter-spacing: 0.01em;
+  margin-bottom: 10px;
+}
+
+.show-text-muted {
+  font-size: 30px;
 }
 
 /* ================================ 404 page */
@@ -561,7 +725,7 @@ p.card-bio {
   color: white;
 }
 
-.message-404 > h4.display-4 {
+.message-404>h4.display-4 {
   font-size: 2.5em;
 }
 
