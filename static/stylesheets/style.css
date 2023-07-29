@@ -446,6 +446,14 @@ p.card-bio {
   margin-bottom: 30px;
 }
 
+.warb-text {
+  font-size: 2em; 
+}
+
+.add-warb {
+  font-size: 2em;
+}
+
 @media (min-width: 991px) {
   .card-link>p {
     position: absolute;
@@ -465,10 +473,6 @@ p.card-bio {
 
   .new-warb a {
     font-size: 15px;
-  }
-
-  .create-warb {
-    font-size: clamp(1em, 12vw + 1rem, 3em);
   }
 
   .profile-message-container {
@@ -518,6 +522,7 @@ p.card-bio {
   .follow-user-location {
     font-size: 15px;
   }
+
 }
 
 /* ============================ Signed out home */
