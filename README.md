@@ -21,7 +21,8 @@
 
 
 <!-- USAGE EXAMPLES -->
-
+## Demo Video
+![ezgif com-crop (1)](https://github.com/shavinski/flask-warbler/assets/104947296/a7052616-0f52-451e-959b-93a7ab4767c7)
 
 
 
